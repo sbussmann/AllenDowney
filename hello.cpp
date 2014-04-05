@@ -4,143 +4,64 @@
 #include <ctype.h>
 using namespace std;
 
-// main: generate some simple output
+// Difference from python: use an "&" symbol after declaring the type of a
+// parameter to pass an argument by reference.  Note that reference arguments
+// must be variables, not expressions.  So j works, but j+1 does not.
 
-void printLogarithm (double x) {
-    if (x <= 0.0) {
-        cout << "Positive numbers only, please." << endl;
-        return;
-    }
-    double result = log (x);
-    cout << "The log of x is " << result << endl;
+// Structures
+
+// An example of structures: Point objects
+
+struct Point {
+    double x, y;
+};
+
+void printPoint (Point p) {
+    cout << "(" << p.x << ", " << p.y << ")" << endl;
 }
 
-void nLines (int n) {
-    if (n > 0) {
-        cout << endl;
-        nLines (n-1);
-    }
+double distance (Point p1, Point p2) {
+    double dx = p2.x - p1.x;
+    double dy = p2.y - p1.y;
+    return sqrt (dx*dx + dy*dy);
 }
 
-double area (double radius) {
-    double pi = acos (-1.0);
-    double area = pi * radius * radius;
-    return area;
+void reflect (Point& p)
+{
+    double temp = p.x;
+    p.x = p.y;
+    p.y = temp;
 }
 
-double absoluteValue (double x) {
-    if (x < 0) {
-        return -x;
-    } else {
-        return x;
-    }
-}
+// Another example of structures: Rectangles
 
-double distance (double x1, double y1, double x2, double y2) {
-    double dx = x2 - x1;
-    double dy = y2 - y1;
-    double dsquared = dx*dx + dy*dy;
-    double result = sqrt (dsquared);
+struct Rectangle {
+    Point corner;
+    double width, height;
+};
+
+Point findCenter (Rectangle& box)
+{
+    double x = box.corner.x + box.width/2;
+    double y = box.corner.y + box.height/2;
+    Point result = {x, y};
     return result;
 }
 
-double fred (double xc, double yc, double xp, double yp) {
-    double radius = distance (xc, yc, xp, yp);
-    double result = area (radius);
-    return result;
-}
-
-bool isSingleDigit (int x)
+void swap (int& x, int&y)
 {
-    return (x >=0 && x < 10);
-}
-
-int factorial (int n)
-{
-    if (n == 0) {
-        return 1;
-    } else {
-        int recurse = factorial (n-1);
-        int result = n * recurse;
-        return result;
-    }
-}
-
-int fibonacci (int n) {
-    if (n == 0 || n == 1) {
-        return 1;
-    } else {
-        return fibonacci(n-1) + fibonacci(n-2);
-    }
-}
-
-int countdown (int n) {
-    while (n > 0) {
-        cout << n << endl;
-        n = n - 1;
-    }
-    cout << "Blastoff!" << endl;
-    return 0;
-}
-
-void printMultiples (int n, int high)
-{
-    int i = 1;
-    while (i <= high) {
-        cout << n*i << "\t";
-        i += 1;
-    }
-    cout << endl;
-}
-
-void printMultTable (int high) {
-    int i = 1;
-    while (i <= high) {
-        printMultiples (i, i);
-        i += 1;
-    }
-}
-
-int find (string s, char c, int i)
-{
-    while (i<s.length()) {
-        if (s[i] == c) return i;
-        i += 1;
-    }
-    return -1;
-}
-
-int countLetters (string s, char c)
-{
-    int oldindex = 0;
-    int count = 0;
-    while (oldindex < s.length()) {
-        int index = find(s, c, oldindex);
-        if (index >= 0) {
-            count += 1;
-            oldindex = index + 1;
-        } else {
-            return count;
-        }
-    }
-    return count;
-}
-
-void stringToUpper (string s)
-{
-    int index = 0;
-    int length = s.length();
-    while (index < length) {
-        char upperchar = toupper (s[index]);
-        s[index] = upperchar;
-        index++;
-    }
-    cout << s << endl;
+    int temp = x;
+    x = y;
+    y = temp;
 }
 
 int main ()
 {
-    string fruit = "baNana";
-    stringToUpper (fruit);
+
+    string name;
+    cout << "What's your name? ";
+    getline (cin, name);
+    cout << name << endl;
+
     return 0;
 }
