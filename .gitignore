@@ -1,3 +1,6 @@
+# VIM savefiles
+*.sw?
+
 # Compiled Object files
 *.slo
 *.lo
